@@ -6,7 +6,7 @@ const App = () => {
       id: 1,
       title: "AI Roadmap",
       emoji: "🧠",
-      details: "I 2024 samarbejdede sektionen med DTU studerende for at udarbejde en roadmap for AI",
+      details: "I 2024 samarbejdede sektionen med DTU studerende for at udarbejde en roadmap for AI.",
       theme: "Innovation",
       color: "#ffcccb"
     },
@@ -14,7 +14,7 @@ const App = () => {
       id: 2,
       title: "Sektionsdag",
       emoji: "🌧️",
-      details: "Sektionen blev fanget i regn og hagl i både i 2 timer, men stadig med højt humør",
+      details: "Sektionen blev fanget i regn og hagl i GoBoats, men stadig med (rimelig) højt humør.",
       theme: "Team Spirit",
       color: "#add8e6"
     },
@@ -22,7 +22,7 @@ const App = () => {
       id: 3,
       title: "Stabile Systemer",
       emoji: "🛡️",
-      details: "Sektionen har sikret at 6 af regionens kritiske systemer kører stabilt",
+      details: "Sektionen har sikret at 6 af regionens kritiske systemer kører stabilt.",
       theme: "Stabilitet",
       color: "#90ee90"
     },
@@ -30,15 +30,15 @@ const App = () => {
       id: 4,
       title: "Diagnostik",
       emoji: "🏥",
-      details: "Digitalisering af patologi og fælles blodbanksystem",
+      details: "Forberedt digitalisering af patologi i Region Hovedstaden og fællesregionalt blodbanksystem.",
       theme: "Digital",
       color: "#f9a602"
     },
     {
       id: 5,
       title: "Opgraderinger",
-      emoji: "⚡",
-      details: "21 succesfulde opgraderinger af systemer gennemført",
+      emoji: ⚡,
+      details: "21 succesfulde opgraderinger af systemer gennemført.",
       theme: "Drift",
       color: "#9370db"
     },
@@ -46,7 +46,7 @@ const App = () => {
       id: 6,
       title: "Nye Kollegaer",
       emoji: "👥",
-      details: "4 nye medarbejdere er blevet en vigtig del af sektionen",
+      details: "4 nye medarbejdere er blevet en vigtig del af sektionen.",
       theme: "Vækst",
       color: "#ff69b4"
     },
@@ -54,7 +54,7 @@ const App = () => {
       id: 7,
       title: "IT Systemer",
       emoji: "📈",
-      details: "Gennemgang og optimering af alle IT-systemer",
+      details: "Optimering af alle IT-systemer og lukning af forældede systemer.",
       theme: "Proces",
       color: "#ffb347"
     },
@@ -62,7 +62,7 @@ const App = () => {
       id: 8,
       title: "Kurser",
       emoji: "📚",
-      details: "16 kurser fra ITIL til cybersikkerhed gennemført",
+      details: "16 kurser gennemført i emner fra ITIL til cybersikkerhed gennemført.",
       theme: "Læring",
       color: "#00ced1"
     }
@@ -75,13 +75,12 @@ const App = () => {
   const [matchDetails, setMatchDetails] = useState(null);
 
   useEffect(() => {
-    // Limit the cards to 8 pairs for a 4x4 grid
     const gameCards = [
       ...achievements.map(a => ({ ...a, type: 'achievement' })),
       ...achievements.map(a => ({ ...a, type: 'theme' }))
     ]
-      .slice(0, 16) // Ensure only 16 cards
-      .sort(() => Math.random() - 0.5); // Shuffle the cards
+      .slice(0, 16)
+      .sort(() => Math.random() - 0.5);
     setCards(gameCards);
   }, []);
 
@@ -101,7 +100,7 @@ const App = () => {
           setMatched(new Set([...matched, first, second]));
           setScore(score + 100);
           setFlipped([]);
-          setMatchDetails(cards[first].details); // Show details of the matched card
+          setMatchDetails(cards[first].details);
         }, 1000);
       } else {
         setTimeout(() => {
@@ -149,7 +148,8 @@ const App = () => {
               color: flipped.includes(index) || matched.has(index) ? 'white' : 'black',
               padding: '10px',
               textAlign: 'center',
-              transition: 'all 0.3s ease'
+              transition: 'transform 0.3s ease, background-color 0.3s ease',
+              transform: flipped.includes(index) || matched.has(index) ? 'rotateY(0)' : 'rotateY(180deg)'
             }}
           >
             {flipped.includes(index) || matched.has(index) ? (
@@ -200,39 +200,9 @@ const App = () => {
           </button>
         </div>
       )}
-
-      {matched.size === cards.length && (
-        <div style={{
-          position: 'fixed',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          backgroundColor: 'white',
-          padding: '20px',
-          borderRadius: '8px',
-          boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-          textAlign: 'center'
-        }}>
-          <h2>Tillykke! 🎉</h2>
-          <p>Du har fundet alle matches med {score} point!</p>
-          <button
-            onClick={() => window.location.reload()}
-            style={{
-              backgroundColor: '#4a90e2',
-              color: 'white',
-              padding: '10px 20px',
-              border: 'none',
-              borderRadius: '4px',
-              marginTop: '10px',
-              cursor: 'pointer'
-            }}
-          >
-            Spil igen
-          </button>
-        </div>
-      )}
     </div>
   );
 };
 
 export default App;
+
