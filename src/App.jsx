@@ -160,4 +160,20 @@ const App = () => {
             onClick={closeDetails}
             style={{
               backgroundColor: '#4a90e2',
+              color: 'white',
+              padding: '10px 20px',
+              border: 'none',
+              borderRadius: '4px',
+              marginTop: '10px',
+              cursor: 'pointer'
+            }}
+          >
+            Close
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
 
+export default App;
