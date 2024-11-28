@@ -10,7 +10,7 @@ const App = () => {
     { id: 5, title: "Opgraderinger", emoji: "⚡", details: "21 succesfulde opgraderinger af systemer gennemført.", theme: "Drift", color: "#9370db" },
     { id: 6, title: "Nye Kollegaer", emoji: "👥", details: "4 nye medarbejdere er blevet en vigtig del af sektionen.", theme: "Vækst", color: "#ff69b4" },
     { id: 7, title: "IT Systemer", emoji: "📈", details: "Optimering af alle IT-systemer og lukning af forældede systemer.", theme: "Optimering", color: "#4682b4" },
-    { id: 8, title: "Kurser", emoji: "📚", details: "16 kurser gennemført i emner fra ITIL til cybersikkerhed gennemført.", theme: "Læring", color: "#00ced1" },
+    { id: 8, title: "Kurser", emoji: "📚", details: "16 kurser gennemført i emner fra ITIL til cybersikkerhed gennemført.", theme: "Læring", color: "#00ced1" }
   ];
 
   const [cards, setCards] = useState([]);
@@ -160,21 +160,4 @@ const App = () => {
             onClick={closeDetails}
             style={{
               backgroundColor: '#4a90e2',
-              color: 'white',
-              padding: '10px 20px',
-              border: 'none',
-              borderRadius: '4px',
-              marginTop: '10px',
-              cursor: 'pointer'
-            }}
-          >
-            Close
-          </button>
-        </div>
-      )}
-    </div>
-  );
-};
-
-export default App;
 
