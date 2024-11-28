@@ -2,70 +2,14 @@ import React, { useState, useEffect } from 'react';
 
 const App = () => {
   const achievements = [
-    {
-      id: 1,
-      title: "AI Roadmap",
-      emoji: "🧠",
-      details: "I 2024 samarbejdede sektionen med DTU studerende for at udarbejde en roadmap for AI.",
-      theme: "Innovation",
-      color: "#ffcccb"
-    },
-    {
-      id: 2,
-      title: "Sektionsdag",
-      emoji: "🌧️",
-      details: "Sektionen blev fanget i regn og hagl i GoBoats, men stadig med (rimelig) højt humør.",
-      theme: "Team Spirit",
-      color: "#add8e6"
-    },
-    {
-      id: 3,
-      title: "Stabile Systemer",
-      emoji: "🛡️",
-      details: "Sektionen har sikret at 6 af regionens kritiske systemer kører stabilt.",
-      theme: "Stabilitet",
-      color: "#90ee90"
-    },
-    {
-      id: 4,
-      title: "Diagnostik",
-      emoji: "🏥",
-      details: "Forberedt digitalisering af patologi i Region Hovedstaden og fællesregionalt blodbanksystem.",
-      theme: "Digital",
-      color: "#f9a602"
-    },
-    {
-      id: 5,
-      title: "Opgraderinger",
-      emoji: ⚡,
-      details: "21 succesfulde opgraderinger af systemer gennemført.",
-      theme: "Drift",
-      color: "#9370db"
-    },
-    {
-      id: 6,
-      title: "Nye Kollegaer",
-      emoji: "👥",
-      details: "4 nye medarbejdere er blevet en vigtig del af sektionen.",
-      theme: "Vækst",
-      color: "#ff69b4"
-    },
-    {
-      id: 7,
-      title: "IT Systemer",
-      emoji: "📈",
-      details: "Optimering af alle IT-systemer og lukning af forældede systemer.",
-      theme: "Proces",
-      color: "#ffb347"
-    },
-    {
-      id: 8,
-      title: "Kurser",
-      emoji: "📚",
-      details: "16 kurser gennemført i emner fra ITIL til cybersikkerhed gennemført.",
-      theme: "Læring",
-      color: "#00ced1"
-    }
+    { id: 1, title: "AI Roadmap", emoji: "🧠", details: "I 2024 samarbejdede sektionen med DTU studerende for at udarbejde en roadmap for AI.", theme: "Innovation", color: "#ffcccb" },
+    { id: 2, title: "Sektionsdag", emoji: "🌧️", details: "Sektionen blev fanget i regn og hagl i GoBoats, men stadig med (rimelig) højt humør.", theme: "Team Spirit", color: "#add8e6" },
+    { id: 3, title: "Stabile Systemer", emoji: "🛡️", details: "Sektionen har sikret at 6 af regionens kritiske systemer kører stabilt.", theme: "Stabilitet", color: "#90ee90" },
+    { id: 4, title: "Diagnostik", emoji: "🏥", details: "Forberedt digitalisering af patologi i Region Hovedstaden og fællesregionalt blodbanksystem.", theme: "Digital", color: "#f9a602" },
+    { id: 5, title: "Opgraderinger", emoji: "⚡", details: "21 succesfulde opgraderinger af systemer gennemført.", theme: "Drift", color: "#9370db" },
+    { id: 6, title: "Nye Kollegaer", emoji: "👥", details: "4 nye medarbejdere er blevet en vigtig del af sektionen.", theme: "Vækst", color: "#ff69b4" },
+    { id: 7, title: "IT Systemer", emoji: "📈", details: "Optimering af alle IT-systemer og lukning af forældede systemer.", theme: "Proces", color: "#ffb347" },
+    { id: 8, title: "Kurser", emoji: "📚", details: "16 kurser gennemført i emner fra ITIL til cybersikkerhed gennemført.", theme: "Læring", color: "#00ced1" },
   ];
 
   const [cards, setCards] = useState([]);
@@ -85,9 +29,7 @@ const App = () => {
   }, []);
 
   const handleClick = (index) => {
-    if (flipped.length === 2) return;
-    if (matched.has(index)) return;
-    if (flipped.includes(index)) return;
+    if (flipped.length === 2 || matched.has(index) || flipped.includes(index)) return;
 
     const newFlipped = [...flipped, index];
     setFlipped(newFlipped);
@@ -116,7 +58,7 @@ const App = () => {
   return (
     <div style={{ padding: '20px', maxWidth: '800px', margin: '0 auto' }}>
       <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>Laboratoriesystemer 2024</h1>
-      
+
       <div style={{ textAlign: 'center', marginBottom: '20px' }}>
         <div style={{ display: 'inline-block', margin: '0 10px', padding: '10px', backgroundColor: '#f0f0f0', borderRadius: '5px' }}>
           Score: {score}
@@ -148,7 +90,7 @@ const App = () => {
               color: flipped.includes(index) || matched.has(index) ? 'white' : 'black',
               padding: '10px',
               textAlign: 'center',
-              transition: 'transform 0.3s ease, background-color 0.3s ease',
+              transition: 'transform 0.4s ease, background-color 0.4s ease',
               transform: flipped.includes(index) || matched.has(index) ? 'rotateY(0)' : 'rotateY(180deg)'
             }}
           >
@@ -205,4 +147,3 @@ const App = () => {
 };
 
 export default App;
-
