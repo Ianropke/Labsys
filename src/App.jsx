@@ -128,11 +128,11 @@ const App = () => {
               <div>
                 {card.type === 'achievement' ? (
                   <>
-                    <div style={{ fontSize: '24px' }}>{card.emoji}</div>
-                    <div style={{ fontSize: '12px' }}>{card.title}</div>
+                    <div style={{ fontSize: '30px', fontWeight: 'bold' }}>{card.emoji}</div>
+                    <div style={{ fontSize: '16px', fontWeight: 'bold', marginTop: '5px' }}>{card.title}</div>
                   </>
                 ) : (
-                  <div style={{ fontWeight: 'bold' }}>{card.theme}</div>
+                  <div style={{ fontSize: '18px', fontWeight: 'bold' }}>{card.theme}</div>
                 )}
               </div>
             ) : (
