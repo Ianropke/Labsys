@@ -26,7 +26,46 @@ const App = () => {
       theme: "Stabilitet",
       color: "#90ee90"
     },
-    // Add similar entries for the rest...
+    {
+      id: 4,
+      title: "Diagnostik",
+      emoji: "🏥",
+      details: "Digitalisering af patologi og fælles blodbanksystem",
+      theme: "Digital",
+      color: "#f9a602"
+    },
+    {
+      id: 5,
+      title: "Opgraderinger",
+      emoji: "⚡",
+      details: "21 succesfulde opgraderinger af systemer gennemført",
+      theme: "Drift",
+      color: "#9370db"
+    },
+    {
+      id: 6,
+      title: "Nye Kollegaer",
+      emoji: "👥",
+      details: "4 nye medarbejdere er blevet en vigtig del af sektionen",
+      theme: "Vækst",
+      color: "#ff69b4"
+    },
+    {
+      id: 7,
+      title: "IT Systemer",
+      emoji: "📈",
+      details: "Gennemgang og optimering af alle IT-systemer",
+      theme: "Proces",
+      color: "#ffb347"
+    },
+    {
+      id: 8,
+      title: "Kurser",
+      emoji: "📚",
+      details: "16 kurser fra ITIL til cybersikkerhed gennemført",
+      theme: "Læring",
+      color: "#00ced1"
+    }
   ];
 
   const [cards, setCards] = useState([]);
@@ -36,10 +75,13 @@ const App = () => {
   const [matchDetails, setMatchDetails] = useState(null);
 
   useEffect(() => {
+    // Limit the cards to 8 pairs for a 4x4 grid
     const gameCards = [
       ...achievements.map(a => ({ ...a, type: 'achievement' })),
       ...achievements.map(a => ({ ...a, type: 'theme' }))
-    ].sort(() => Math.random() - 0.5);
+    ]
+      .slice(0, 16) // Ensure only 16 cards
+      .sort(() => Math.random() - 0.5); // Shuffle the cards
     setCards(gameCards);
   }, []);
 
