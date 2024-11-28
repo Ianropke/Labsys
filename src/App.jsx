@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Confetti from 'react-confetti';
 
 const App = () => {
   const achievements = [
@@ -56,16 +57,44 @@ const App = () => {
   const closeDetails = () => setMatchDetails(null);
 
   return (
-    <div style={{ padding: '20px', maxWidth: '800px', margin: '0 auto' }}>
-      <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>Laboratoriesystemer 2024</h1>
+    <div style={{
+      background: 'linear-gradient(135deg, #f5f7fa, #c3cfe2)',
+      minHeight: '100vh',
+      padding: '20px'
+    }}>
+      {matched.size === cards.length && <Confetti width={window.innerWidth} height={window.innerHeight} />}
 
-      <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-        <div style={{ display: 'inline-block', margin: '0 10px', padding: '10px', backgroundColor: '#f0f0f0', borderRadius: '5px' }}>
-          Score: {score}
+      <h1 style={{
+        textAlign: 'center',
+        marginBottom: '20px',
+        background: 'linear-gradient(90deg, #4a90e2, #f9a602)',
+        WebkitBackgroundClip: 'text',
+        color: 'transparent',
+        fontSize: '2.5rem',
+        fontWeight: 'bold'
+      }}>
+        🧪 Laboratoriesystemer 2024 🧪
+      </h1>
+
+      <div style={{ marginBottom: '20px' }}>
+        <div style={{
+          background: '#e0e0e0',
+          borderRadius: '10px',
+          overflow: 'hidden',
+          width: '100%',
+          height: '20px',
+          marginBottom: '10px'
+        }}>
+          <div style={{
+            background: '#4a90e2',
+            width: `${(matched.size / 16) * 100}%`,
+            height: '100%',
+            transition: 'width 0.5s ease'
+          }}></div>
         </div>
-        <div style={{ display: 'inline-block', margin: '0 10px', padding: '10px', backgroundColor: '#f0f0f0', borderRadius: '5px' }}>
+        <p style={{ textAlign: 'center' }}>
           Matches: {matched.size / 2} / {achievements.length}
-        </div>
+        </p>
       </div>
 
       <div style={{
@@ -82,7 +111,7 @@ const App = () => {
               backgroundColor: flipped.includes(index) || matched.has(index)
                 ? achievements.find(a => a.id === card.id)?.color || '#4a90e2'
                 : '#e0e0e0',
-              borderRadius: '8px',
+              borderRadius: '12px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -90,8 +119,9 @@ const App = () => {
               color: flipped.includes(index) || matched.has(index) ? 'white' : 'black',
               padding: '10px',
               textAlign: 'center',
-              transition: 'transform 0.4s ease, background-color 0.4s ease',
-              transform: flipped.includes(index) || matched.has(index) ? 'rotateY(0)' : 'rotateY(180deg)'
+              transition: 'transform 0.4s ease, background-color 0.4s ease, box-shadow 0.3s ease',
+              transform: flipped.includes(index) || matched.has(index) ? 'rotateY(0)' : 'rotateY(180deg)',
+              boxShadow: flipped.includes(index) || matched.has(index) ? '0 5px 15px rgba(0, 0, 0, 0.2)' : 'none'
             }}
           >
             {flipped.includes(index) || matched.has(index) ? (
