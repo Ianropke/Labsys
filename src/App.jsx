@@ -64,15 +64,19 @@ const App = () => {
     }}>
       {matched.size === cards.length && <Confetti width={window.innerWidth} height={window.innerHeight} />}
 
-      <h1 style={{
-        textAlign: 'center',
-        marginBottom: '20px',
-        background: 'linear-gradient(90deg, #4a90e2, #f9a602)',
-        WebkitBackgroundClip: 'text',
-        color: 'transparent',
-        fontSize: '2.5rem',
-        fontWeight: 'bold'
-      }}>
+      <h1
+        style={{
+          textAlign: 'center',
+          marginBottom: '20px',
+          background: 'linear-gradient(90deg, #4a90e2, #f9a602)',
+          WebkitBackgroundClip: 'text',
+          color: 'transparent',
+          fontWeight: 'bold',
+          fontSize: 'calc(2.5rem + 1vw)', // Responsive font size
+          lineHeight: '1.2', // Adjust line height for better wrapping
+          wordBreak: 'break-word', // Ensure long words wrap correctly
+        }}
+      >
         🧪 Laboratoriesystemer 2024 🧪
       </h1>
 
