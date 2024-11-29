@@ -121,16 +121,17 @@ const App = () => {
         boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
         display: 'inline-block',
         textAlign: 'center',
+        width: 'fit-content',
       }}>
-        <h2 style={{ margin: '0 0 10px', fontSize: '18px', fontWeight: 'bold' }}>Progress</h2>
+        <h2 style={{ margin: '0 0 15px', fontSize: '18px', fontWeight: 'bold' }}>Progress</h2>
         <div style={{
           background: '#e0e0e0',
           borderRadius: '10px',
           overflow: 'hidden',
           width: '300px',
-          height: '20px',
+          height: '24px', // Adjusted for better visibility
           position: 'relative',
-          margin: '0 auto 10px',
+          margin: '0 auto 15px',
         }}>
           <div style={{
             background: 'linear-gradient(90deg, #4a90e2, #00ced1)',
@@ -140,12 +141,13 @@ const App = () => {
           }}></div>
           <p style={{
             position: 'absolute',
-            top: '0',
+            top: '50%',
             left: '50%',
-            transform: 'translateX(-50%)',
-            fontSize: '12px',
+            transform: 'translate(-50%, -50%)',
+            fontSize: '14px', // Slightly larger text
             fontWeight: 'bold',
             color: 'black',
+            margin: 0,
           }}>
             {Math.round((matched.size / cards.length) * 100)}%
           </p>
