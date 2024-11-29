@@ -19,7 +19,6 @@ const App = () => {
   const [score, setScore] = useState(0);
   const [matchDetails, setMatchDetails] = useState(null);
   const [showConfetti, setShowConfetti] = useState(false);
-  const [hintUsed, setHintUsed] = useState(false);
 
   useEffect(() => {
     const gameCards = [
@@ -30,8 +29,9 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    if (matched.size === cards.length) {
+    if (matched.size === cards.length && cards.length > 0) {
       setShowConfetti(true);
+      setTimeout(() => setShowConfetti(false), 5000); // Confetti stops after 5 seconds
     }
   }, [matched, cards]);
 
@@ -61,32 +61,6 @@ const App = () => {
   };
 
   const closeDetails = () => setMatchDetails(null);
-
-  const showHint = () => {
-    if (hintUsed) return;
-    setHintUsed(true);
-
-    const unmatchedCards = cards
-      .map((card, index) => ({ ...card, index }))
-      .filter(card => !matched.has(card.index));
-
-    if (unmatchedCards.length < 2) return;
-
-    const cardGroups = unmatchedCards.reduce((groups, card) => {
-      groups[card.id] = groups[card.id] || [];
-      groups[card.id].push(card.index);
-      return groups;
-    }, {});
-
-    const pair = Object.values(cardGroups).find(group => group.length === 2);
-
-    if (pair) {
-      setFlipped(pair);
-      setTimeout(() => {
-        setFlipped([]);
-      }, 1000);
-    }
-  };
 
   return (
     <div style={{
@@ -143,22 +117,6 @@ const App = () => {
         <p style={{ textAlign: 'center', marginBottom: '10px' }}>
           Matches: {matched.size / 2} / {achievements.length}
         </p>
-        <button
-          onClick={showHint}
-          disabled={hintUsed}
-          style={{
-            backgroundColor: hintUsed ? '#ccc' : '#4a90e2',
-            color: 'white',
-            padding: '10px 20px',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: hintUsed ? 'not-allowed' : 'pointer',
-            display: 'block',
-            margin: '0 auto',
-          }}
-        >
-          {hintUsed ? 'Hint Used' : 'Show Hint'}
-        </button>
       </div>
 
       <div style={{
