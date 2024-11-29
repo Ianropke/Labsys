@@ -19,6 +19,7 @@ const App = () => {
   const [score, setScore] = useState(0);
   const [matchDetails, setMatchDetails] = useState(null);
   const [showConfetti, setShowConfetti] = useState(false);
+  const [hintUsed, setHintUsed] = useState(false);
 
   useEffect(() => {
     const gameCards = [
@@ -62,6 +63,32 @@ const App = () => {
 
   const closeDetails = () => setMatchDetails(null);
 
+  const showHint = () => {
+    if (hintUsed) return;
+    setHintUsed(true);
+
+    const unmatchedCards = cards
+      .map((card, index) => ({ ...card, index }))
+      .filter(card => !matched.has(card.index));
+
+    if (unmatchedCards.length < 2) return;
+
+    const cardGroups = unmatchedCards.reduce((groups, card) => {
+      groups[card.id] = groups[card.id] || [];
+      groups[card.id].push(card.index);
+      return groups;
+    }, {});
+
+    const pair = Object.values(cardGroups).find(group => group.length === 2);
+
+    if (pair) {
+      setFlipped(pair);
+      setTimeout(() => {
+        setFlipped([]);
+      }, 1000);
+    }
+  };
+
   return (
     <div style={{
       background: 'linear-gradient(135deg, #f5f7fa, #c3cfe2)',
@@ -86,15 +113,22 @@ const App = () => {
         🧪 Laboratoriesystemer 2024 🧪
       </h1>
 
-      <div style={{ marginBottom: '20px' }}>
+      <div style={{
+        textAlign: 'center',
+        marginBottom: '20px',
+        padding: '10px',
+        backgroundColor: '#f0f0f0',
+        borderRadius: '10px',
+      }}>
+        <h2 style={{ margin: '0 0 10px', fontSize: '18px', fontWeight: 'bold' }}>Progress</h2>
         <div style={{
           background: '#e0e0e0',
           borderRadius: '10px',
           overflow: 'hidden',
           width: '100%',
           height: '20px',
-          marginBottom: '10px',
           position: 'relative',
+          marginBottom: '10px',
         }}>
           <div style={{
             background: 'linear-gradient(90deg, #4a90e2, #00ced1)',
@@ -114,9 +148,20 @@ const App = () => {
             {Math.round((matched.size / cards.length) * 100)}%
           </p>
         </div>
-        <p style={{ textAlign: 'center', marginBottom: '10px' }}>
-          Matches: {matched.size / 2} / {achievements.length}
-        </p>
+        <button
+          onClick={showHint}
+          disabled={hintUsed}
+          style={{
+            backgroundColor: hintUsed ? '#ccc' : '#4a90e2',
+            color: 'white',
+            padding: '10px 20px',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: hintUsed ? 'not-allowed' : 'pointer',
+          }}
+        >
+          {hintUsed ? 'Hint Used' : 'Show Hint'}
+        </button>
       </div>
 
       <div style={{
