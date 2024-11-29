@@ -93,13 +93,13 @@ const App = () => {
     <div style={{
       background: 'linear-gradient(135deg, #f5f7fa, #c3cfe2)',
       minHeight: '100vh',
-      padding: '20px'
+      padding: '20px',
+      textAlign: 'center',
     }}>
       {showConfetti && <Confetti width={window.innerWidth} height={window.innerHeight} />}
 
       <h1
         style={{
-          textAlign: 'center',
           marginBottom: '20px',
           background: 'linear-gradient(90deg, #4a90e2, #f9a602)',
           WebkitBackgroundClip: 'text',
@@ -114,21 +114,23 @@ const App = () => {
       </h1>
 
       <div style={{
+        marginBottom: '30px',
+        padding: '20px',
+        backgroundColor: '#ffffff',
+        borderRadius: '12px',
+        boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+        display: 'inline-block',
         textAlign: 'center',
-        marginBottom: '20px',
-        padding: '10px',
-        backgroundColor: '#f0f0f0',
-        borderRadius: '10px',
       }}>
         <h2 style={{ margin: '0 0 10px', fontSize: '18px', fontWeight: 'bold' }}>Progress</h2>
         <div style={{
           background: '#e0e0e0',
           borderRadius: '10px',
           overflow: 'hidden',
-          width: '100%',
+          width: '300px',
           height: '20px',
           position: 'relative',
-          marginBottom: '10px',
+          margin: '0 auto 10px',
         }}>
           <div style={{
             background: 'linear-gradient(90deg, #4a90e2, #00ced1)',
@@ -158,6 +160,7 @@ const App = () => {
             border: 'none',
             borderRadius: '4px',
             cursor: hintUsed ? 'not-allowed' : 'pointer',
+            marginTop: '10px',
           }}
         >
           {hintUsed ? 'Hint Used' : 'Show Hint'}
@@ -166,8 +169,9 @@ const App = () => {
 
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))',
-        gap: '10px'
+        gridTemplateColumns: 'repeat(4, 1fr)',
+        gap: '10px',
+        justifyContent: 'center',
       }}>
         {cards.map((card, index) => (
           <div
