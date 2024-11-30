@@ -41,16 +41,17 @@ button {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Adjust the card grid to center within the game container */
+/* Adjust the card grid to be responsive */
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(4, 150px);
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
   gap: 15px;
   justify-content: center;
 }
 
 .card {
-  width: 150px;
+  width: 100%;
+  max-width: 150px;
   height: 180px;
   perspective: 600px;
 }
@@ -129,10 +130,31 @@ button {
   text-align: center;
 }
 
-.modal-content h2 {
-  margin-top: 0;
-}
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .card {
+    height: 130px;
+  }
 
-.modal-content button {
-  margin-top: 20px;
+  .card-front .emoji {
+    font-size: 40px;
+  }
+
+  .card-front .title,
+  .card-front .theme {
+    font-size: 14px;
+  }
+
+  .stats p {
+    font-size: 16px;
+  }
+
+  button {
+    font-size: 14px;
+  }
+
+  .modal-content {
+    width: 90%;
+    padding: 15px;
+  }
 }
