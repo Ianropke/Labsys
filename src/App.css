@@ -90,11 +90,12 @@
 }
 
 .card {
-  width: 100%;
+  width: 100px; /* Adjust width as needed */
   height: 120px;
   position: relative;
   transform-style: preserve-3d;
   transition: transform 0.6s;
+  cursor: pointer;
 }
 
 .card.flipped {
@@ -119,13 +120,11 @@
 }
 
 .card-back {
-  /* Background color is set inline in the component */
+  background-color: #4a90e2; /* Default color, overridden inline if needed */
   color: white;
   transform: rotateY(180deg);
   flex-direction: column;
   padding: 10px;
-  border-radius: 12px;
-  backface-visibility: hidden;
 }
 
 .modal {
@@ -136,7 +135,7 @@
   background-color: white;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   text-align: center;
   max-width: 80%;
   max-height: 80%;
