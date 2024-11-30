@@ -1,4 +1,4 @@
-// index.js
+// src/index.js
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import './App.css'; // Ensure this import is correct
@@ -179,7 +179,7 @@ function App() {
     setDisabled(false);
 
     // Check if the game is over
-    if (matchedCards.length === cardData.length) {
+    if (matchedCards.length + 1 === cardData.length) {
       setGameActive(false); // Stop the timer
     }
   };
