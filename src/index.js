@@ -4,9 +4,8 @@ import ReactDOM from 'react-dom';
 import './App.css'; // Import the updated CSS file
 
 function App() {
-  // Your card data
+  // Your full card data
   const cardData = [
-    // ... (Same card data as before)
     {
       id: 1,
       title: 'AI Roadmap',
@@ -16,7 +15,58 @@ function App() {
       theme: 'Innovation',
       color: '#ffcccb',
     },
-    // ... (Other cards)
+    {
+      id: 2,
+      title: 'Sektionsdag',
+      emoji: '🌧️',
+      details:
+        'Sektionen blev fanget i regn og hagl i GoBoats men stadig med (rimelig) højt humør.',
+      theme: 'Team Spirit',
+      color: '#add8e6',
+    },
+    {
+      id: 3,
+      title: 'Kritiske systemer',
+      emoji: '🛡️',
+      details:
+        'Sektionen har sikret, at 6 af regionens kritiske systemer kører stabilt.',
+      theme: 'Driftsstabilitet',
+      color: '#90ee90',
+    },
+    {
+      id: 4,
+      title: 'Udvikling af diagnostikken',
+      emoji: '🏥',
+      details:
+        'Forberedt digitalisering af patologi i Region Hovedstaden og fællesregionalt blodbanksystem.',
+      theme: 'Digitalisering',
+      color: '#f4a460',
+    },
+    {
+      id: 5,
+      title: 'Opgraderinger',
+      emoji: '⚡',
+      details: '21 succesfulde opgraderinger af systemer gennemført.',
+      theme: 'Drift',
+      color: '#9370db',
+    },
+    {
+      id: 6,
+      title: 'Nye kollegaer',
+      emoji: '👥',
+      details: '4 nye medarbejdere er blevet en vigtig del af sektionen.',
+      theme: 'Vækst',
+      color: '#ff69b4',
+    },
+    {
+      id: 7,
+      title: 'IT-systemer',
+      emoji: '📈',
+      details:
+        'Optimering af alle IT-systemer og lukning af forældede systemer.',
+      theme: 'Optimering',
+      color: '#4682b4',
+    },
     {
       id: 8,
       title: 'Kurser',
