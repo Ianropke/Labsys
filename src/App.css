@@ -1,38 +1,79 @@
-.game-container {
-  max-width: 800px;
-  margin: 0 auto;
+/* app.css */
+
+.app-container {
+  background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+  min-height: 100vh;
   padding: 20px;
+  text-align: center;
 }
 
-.card {
-  height: 120px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
+.app-title {
+  margin-bottom: 20px;
+  background: linear-gradient(90deg, #4a90e2, #f9a602);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: bold;
+  font-size: calc(2.5rem + 1vw);
+  line-height: 1.2;
+  word-break: break-word;
 }
 
-.card-grid {
+.progress-bar-container {
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: inline-block;
+  text-align: center;
+  width: fit-content;
+}
+
+.cards-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 10px;
+  justify-items: center;
 }
 
-.stats {
-  text-align: center;
-  margin-bottom: 20px;
+.card-container {
+  perspective: 1000px;
 }
 
-.win-message {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  text-align: center;
+.card {
+  width: 100%;
+  height: 120px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+}
+
+.card.flipped {
+  transform: rotateY(180deg);
+}
+
+.card-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden; /* For Safari */
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-front {
+  background-color: #e0e0e0;
+  color: black;
+}
+
+.card-back {
+  background-color: var(--card-color, #4a90e2);
+  color: white;
+  transform: rotateY(180deg);
+  flex-direction: column;
+  padding: 10px;
 }
