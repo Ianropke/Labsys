@@ -84,6 +84,10 @@ function App() {
   const [matchedCards, setMatchedCards] = useState([]);
   const [showDetails, setShowDetails] = useState(null); // For displaying match details
 
+  const [moves, setMoves] = useState(0); // For counting moves
+  const [time, setTime] = useState(0); // For tracking time in seconds
+  const [gameActive, setGameActive] = useState(true); // To control the timer
+
   // Function to shuffle and prepare the cards
   const initializeGame = () => {
     const cardsArray = [
@@ -102,11 +106,26 @@ function App() {
     setDisabled(false);
     setMatchedCards([]);
     setShowDetails(null);
+    setMoves(0); // Reset moves
+    setTime(0); // Reset timer
+    setGameActive(true); // Start the timer
   };
 
   useEffect(() => {
     initializeGame();
   }, []);
+
+  // Timer effect
+  useEffect(() => {
+    let timer;
+    if (gameActive) {
+      timer = setInterval(() => {
+        setTime((prevTime) => prevTime + 1);
+      }, 1000);
+    }
+
+    return () => clearInterval(timer);
+  }, [gameActive]);
 
   // Handle card click
   const handleCardClick = (clickedCard) => {
@@ -123,6 +142,7 @@ function App() {
     } else {
       setSecondCard(clickedCard);
       setDisabled(true);
+      setMoves((prevMoves) => prevMoves + 1); // Increment moves
     }
   };
 
@@ -156,12 +176,21 @@ function App() {
     setFirstCard(null);
     setSecondCard(null);
     setDisabled(false);
+
+    // Check if the game is over
+    if (matchedCards.length + 1 === cardData.length) {
+      setGameActive(false); // Stop the timer
+    }
   };
 
   return (
     <div className="App">
       <h1>Året der gik i Laboratoriesystemer 2024</h1>
-      <button onClick={initializeGame}>Restart Game</button>
+      <div className="stats">
+        <p>⏱️ Tid: {time} sekunder</p>
+        <p>🔄 Træk: {moves}</p>
+      </div>
+      <button onClick={initializeGame}>Prøv igen</button>
       <div className="card-grid">
         {cards.map((card) => (
           <div
@@ -196,9 +225,22 @@ function App() {
       {showDetails && (
         <div className="modal">
           <div className="modal-content">
-            <h2>Matched!</h2>
+            <h2>Match fundet!</h2>
             <p>{showDetails}</p>
-            <button onClick={() => setShowDetails(null)}>Close</button>
+            <button onClick={() => setShowDetails(null)}>Luk</button>
+          </div>
+        </div>
+      )}
+
+      {/* Display a message when the game is completed */}
+      {!gameActive && matchedCards.length === cardData.length && (
+        <div className="modal">
+          <div className="modal-content">
+            <h2>🎉 Tillykke!</h2>
+            <p>
+              Du fandt alle parrene på {time} sekunder med {moves} træk.
+            </p>
+            <button onClick={() => initializeGame()}>Spil igen</button>
           </div>
         </div>
       )}
