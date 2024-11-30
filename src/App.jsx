@@ -1,8 +1,8 @@
-// app.jsx
+// App.jsx
 import React, { useState, useEffect } from 'react';
 import Confetti from 'react-confetti';
 import PropTypes from 'prop-types';
-import './app.css'; // Import the CSS file
+import './App.css'; // Import the CSS file with correct capitalization
 
 // Shuffle function
 const shuffleArray = (array) => {
