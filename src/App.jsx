@@ -2,9 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import Confetti from 'react-confetti';
 import PropTypes from 'prop-types';
-import './App.css'; // Import the CSS file with correct capitalization
+import './App.css'; // Ensure the import path matches the file location
 
-// Shuffle function
 const shuffleArray = (array) => {
   let shuffled = array.slice(); // Create a copy
   for (let i = shuffled.length - 1; i > 0; i--) {
@@ -14,7 +13,7 @@ const shuffleArray = (array) => {
   return shuffled;
 };
 
-// Card component
+// Updated Card component
 const Card = ({ card, index, isFlipped, isMatched, handleClick }) => {
   const { title, emoji, theme, color, type } = card;
 
@@ -32,15 +31,35 @@ const Card = ({ card, index, isFlipped, isMatched, handleClick }) => {
         <div className="card-face card-front">✨</div>
         <div
           className="card-face card-back"
-          style={{ '--card-color': color || '#4a90e2' }}
+          style={{
+            backgroundColor: color || '#4a90e2', // Set background color directly
+            display: 'flex',
+            flexDirection: 'column',
+            padding: '10px',
+            color: 'white',
+            transform: 'rotateY(180deg)',
+            borderRadius: '12px',
+            backfaceVisibility: 'hidden',
+          }}
         >
           {type === 'achievement' ? (
             <>
               <div style={{ fontSize: '30px', fontWeight: 'bold' }}>{emoji}</div>
-              <div style={{ fontSize: '16px', fontWeight: 'bold', marginTop: '5px' }}>{title}</div>
+              <div
+                style={{
+                  fontSize: '16px',
+                  fontWeight: 'bold',
+                  marginTop: '5px',
+                  textAlign: 'center',
+                }}
+              >
+                {title}
+              </div>
             </>
           ) : (
-            <div style={{ fontSize: '18px', fontWeight: 'bold' }}>{theme}</div>
+            <div style={{ fontSize: '18px', fontWeight: 'bold', textAlign: 'center' }}>
+              {theme}
+            </div>
           )}
         </div>
       </div>
@@ -56,7 +75,7 @@ Card.propTypes = {
   handleClick: PropTypes.func.isRequired,
 };
 
-// ProgressBar component
+// ProgressBar component remains the same
 const ProgressBar = ({ matchedCount, totalCards, hintUsed, showHint, score }) => {
   const progressPercentage = (matchedCount / totalCards) * 100;
   return (
@@ -92,7 +111,7 @@ ProgressBar.propTypes = {
   score: PropTypes.number.isRequired,
 };
 
-// Modal component
+// Modal component remains the same
 const Modal = ({ matchDetails, closeDetails }) => {
   return (
     <div className="modal">
@@ -146,6 +165,7 @@ const App = () => {
       ...achievements.map((a) => ({ ...a, type: 'theme' })),
     ]);
     setCards(gameCards);
+    console.log('Cards array:', gameCards); // Add this line to verify cards are populated
   }, []);
 
   // Handle window resize for Confetti
