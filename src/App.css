@@ -1,4 +1,4 @@
-/* App.css */
+/* src/App.css */
 body {
   margin: 0;
   padding: 0;
@@ -30,23 +30,26 @@ button {
   font-size: 16px;
 }
 
-/* Game container */
+button:hover {
+  cursor: pointer;
+}
+
 .game-container {
   background-color: #ffffff;
   border-radius: 10px;
   padding: 20px;
-  display: inline-block;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Card grid */
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 15px;
 }
 
-/* Card styles */
 .card {
   width: 100%;
   height: 200px;
@@ -103,7 +106,6 @@ button {
   font-size: 16px;
 }
 
-/* Modal Styles */
 .modal {
   position: fixed;
   top: 0;
@@ -134,10 +136,14 @@ button {
   margin-top: 20px;
 }
 
+.modal-content button:hover {
+  cursor: pointer;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .card-grid {
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
   }
 
   .card {
