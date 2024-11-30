@@ -14,67 +14,69 @@ const shuffleArray = (array) => {
 const Card = ({ card, index, isFlipped, isMatched, handleClick }) => {
   const { title, emoji, theme, color, type } = card;
 
+  const cardContainerStyles = {
+    perspective: '1000px',
+  };
+
   const cardStyles = {
+    width: '100%',
     height: '120px',
-    backgroundColor: isFlipped || isMatched ? color || '#4a90e2' : '#e0e0e0',
-    borderRadius: '12px',
-    cursor: isMatched ? 'default' : 'pointer',
-    padding: '10px',
-    textAlign: 'center',
-    transition: 'transform 0.4s ease, background-color 0.4s ease, box-shadow 0.3s ease',
-    transformStyle: 'preserve-3d',
     position: 'relative',
-    transform: isFlipped ? 'rotateY(0)' : 'rotateY(180deg)',
-    boxShadow: isFlipped ? '0 5px 15px rgba(0, 0, 0, 0.2)' : 'none',
+    transformStyle: 'preserve-3d',
+    transition: 'transform 0.6s',
+    transform: isFlipped || isMatched ? 'rotateY(0deg)' : 'rotateY(180deg)',
+    cursor: isMatched ? 'default' : 'pointer',
+  };
+
+  const cardFaceStyles = {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    backfaceVisibility: 'hidden',
+    borderRadius: '12px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   };
 
   const frontStyles = {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    backfaceVisibility: 'hidden',
-    transform: 'rotateY(0deg)',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
+    ...cardFaceStyles,
+    backgroundColor: color || '#4a90e2',
     color: 'white',
+    transform: 'rotateY(0deg)',
+    flexDirection: 'column',
+    padding: '10px',
   };
 
   const backStyles = {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    backfaceVisibility: 'hidden',
-    transform: 'rotateY(180deg)',
+    ...cardFaceStyles,
     backgroundColor: '#e0e0e0',
-    borderRadius: '12px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
     color: 'black',
+    transform: 'rotateY(180deg)',
   };
 
   return (
-    <div
-      role="button"
-      tabIndex="0"
-      aria-label={`Card ${index}`}
-      onClick={() => handleClick(index)}
-      onKeyPress={(e) => e.key === 'Enter' && handleClick(index)}
-      style={cardStyles}
-    >
-      <div style={frontStyles}>
-        {type === 'achievement' ? (
-          <>
-            <div style={{ fontSize: '30px', fontWeight: 'bold' }}>{emoji}</div>
-            <div style={{ fontSize: '16px', fontWeight: 'bold', marginTop: '5px' }}>{title}</div>
-          </>
-        ) : (
-          <div style={{ fontSize: '18px', fontWeight: 'bold' }}>{theme}</div>
-        )}
+    <div style={cardContainerStyles}>
+      <div
+        role="button"
+        tabIndex="0"
+        aria-label={`Card ${index}`}
+        onClick={() => handleClick(index)}
+        onKeyPress={(e) => e.key === 'Enter' && handleClick(index)}
+        style={cardStyles}
+      >
+        <div style={frontStyles}>
+          {type === 'achievement' ? (
+            <>
+              <div style={{ fontSize: '30px', fontWeight: 'bold' }}>{emoji}</div>
+              <div style={{ fontSize: '16px', fontWeight: 'bold', marginTop: '5px' }}>{title}</div>
+            </>
+          ) : (
+            <div style={{ fontSize: '18px', fontWeight: 'bold' }}>{theme}</div>
+          )}
+        </div>
+        <div style={backStyles}>✨</div>
       </div>
-      <div style={backStyles}>✨</div>
     </div>
   );
 };
@@ -242,7 +244,7 @@ const App = () => {
       ...achievements.map((a) => ({ ...a, type: 'theme' })),
     ]);
     setCards(gameCards);
-  }, [achievements]);
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -260,7 +262,7 @@ const App = () => {
       setShowConfetti(true);
       setTimeout(() => setShowConfetti(false), 5000);
     }
-  }, [matched, cards]);
+  }, [matched, cards.length]);
 
   const handleClick = (index) => {
     if (flipped.length === 2 || matched.has(index) || flipped.includes(index)) return;
@@ -273,7 +275,7 @@ const App = () => {
 
       if (cards[first].id === cards[second].id && cards[first].type !== cards[second].type) {
         setTimeout(() => {
-          setMatched(new Set([...matched, first, second]));
+          setMatched((prevMatched) => new Set([...prevMatched, first, second]));
           setScore((prevScore) => prevScore + 100);
           setFlipped([]);
           setMatchDetails(cards[first].details);
@@ -302,19 +304,21 @@ const App = () => {
     const cardGroups = unmatchedCards.reduce((groups, card) => {
       const key = card.id;
       groups[key] = groups[key] || [];
-      groups[key].push(card.index);
+      groups[key].push(card);
       return groups;
     }, {});
 
     const pair = Object.values(cardGroups).find(
-      (group) => group.length === 2 && cards[group[0]].type !== cards[group[1]].type
+      (group) =>
+        group.length === 2 &&
+        group[0].type !== group[1].type
     );
 
     if (!pair) {
       return;
     }
 
-    setFlipped(pair);
+    setFlipped([pair[0].index, pair[1].index]);
     setTimeout(() => {
       setFlipped([]);
     }, 1000);
@@ -357,10 +361,9 @@ const App = () => {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))',
+          gridTemplateColumns: 'repeat(4, 1fr)', // Fixed 4 columns for symmetry
           gap: '10px',
-          justifyContent: 'center',
-          perspective: '1000px',
+          justifyItems: 'center',
         }}
       >
         {cards.map((card, index) => {
