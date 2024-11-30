@@ -30,6 +30,54 @@
   width: fit-content;
 }
 
+.progress-title {
+  margin: 0 0 15px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.progress-bar {
+  background: #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+  width: 300px;
+  height: 24px;
+  position: relative;
+  margin: 0 auto 15px;
+}
+
+.progress-bar-fill {
+  background: linear-gradient(90deg, #4a90e2, #00ced1);
+  height: 100%;
+  transition: width 0.5s ease;
+}
+
+.progress-bar-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 14px;
+  font-weight: bold;
+  color: black;
+  margin: 0;
+}
+
+.hint-button {
+  background-color: #4a90e2;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.hint-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
 .cards-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -77,4 +125,29 @@
   flex-direction: column;
   padding: 10px;
 }
- 
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  text-align: center;
+  max-width: 80%;
+  max-height: 80%;
+  overflow-y: auto;
+}
+
+.close-button {
+  background-color: #4a90e2;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
