@@ -1,7 +1,7 @@
 // index.js
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import './App.css'; // Import the updated CSS file
+import './App.css'; // Import the CSS file
 
 function App() {
   // Your full card data
@@ -92,15 +92,12 @@ function App() {
 
   // Function to shuffle and prepare the cards
   const initializeGame = () => {
-    const cardsArray = [
-      ...cardData.map((card) => ({ ...card, type: 'achievement' })),
-      ...cardData.map((card) => ({ ...card, type: 'theme' })),
-    ];
+    const cardsArray = cardData.flatMap((card) => [
+      { ...card, type: 'achievement', uniqueId: Math.random(), flipped: false },
+      { ...card, type: 'theme', uniqueId: Math.random(), flipped: false },
+    ]);
 
-    const shuffledCards = cardsArray
-      .map((card) => ({ ...card, uniqueId: Math.random() }))
-      .sort(() => Math.random() - 0.5)
-      .map((card) => ({ ...card, flipped: false }));
+    const shuffledCards = cardsArray.sort(() => Math.random() - 0.5);
 
     setCards(shuffledCards);
     setFirstCard(null);
