@@ -8,16 +8,14 @@ body {
   text-align: center;
   font-family: Arial, sans-serif;
   padding: 20px;
-  /* Add a background gradient */
   background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
-  min-height: 100vh; /* Ensure the background covers the full height */
+  min-height: 100vh;
 }
 
 h1 {
   color: #333;
 }
 
-/* Style the header section */
 .header {
   margin-bottom: 20px;
 }
@@ -32,7 +30,7 @@ button {
   font-size: 16px;
 }
 
-/* Add a container around the game area */
+/* Game container */
 .game-container {
   background-color: #ffffff;
   border-radius: 10px;
@@ -41,18 +39,17 @@ button {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Adjust the card grid to be responsive */
+/* Card grid */
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 15px;
-  justify-content: center;
 }
 
+/* Card styles */
 .card {
   width: 100%;
-  max-width: 150px;
-  height: 180px;
+  height: 200px;
   perspective: 600px;
 }
 
@@ -62,7 +59,6 @@ button {
   height: 100%;
   transform-style: preserve-3d;
   transition: transform 0.6s;
-  /* Add a shadow to the cards */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -125,15 +121,27 @@ button {
   color: #333;
   padding: 20px;
   border-radius: 10px;
-  width: 80%;
+  width: 90%;
   max-width: 500px;
   text-align: center;
 }
 
+.modal-content h2 {
+  margin-top: 0;
+}
+
+.modal-content button {
+  margin-top: 20px;
+}
+
 /* Responsive adjustments */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
+  .card-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  }
+
   .card {
-    height: 130px;
+    height: 160px;
   }
 
   .card-front .emoji {
@@ -151,10 +159,5 @@ button {
 
   button {
     font-size: 14px;
-  }
-
-  .modal-content {
-    width: 90%;
-    padding: 15px;
   }
 }
