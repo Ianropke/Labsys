@@ -1,7 +1,7 @@
 // index.js
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import './App.css'; // Import the CSS file
+import './App.css'; // Ensure this import is correct
 
 function App() {
   // Your full card data
@@ -131,6 +131,7 @@ function App() {
     if (disabled) return;
     if (clickedCard.flipped) return;
 
+    // Flip the clicked card
     const updatedCards = cards.map((card) =>
       card.uniqueId === clickedCard.uniqueId ? { ...card, flipped: true } : card
     );
@@ -158,6 +159,7 @@ function App() {
       } else {
         // Not a match
         setTimeout(() => {
+          // Flip back the cards
           const updatedCards = cards.map((card) =>
             card.uniqueId === firstCard.uniqueId ||
             card.uniqueId === secondCard.uniqueId
@@ -177,7 +179,7 @@ function App() {
     setDisabled(false);
 
     // Check if the game is over
-    if (matchedCards.length + 1 === cardData.length) {
+    if (matchedCards.length === cardData.length) {
       setGameActive(false); // Stop the timer
     }
   };
@@ -203,23 +205,20 @@ function App() {
               onClick={() => handleCardClick(card)}
             >
               <div className="card-inner">
-                {card.flipped || matchedCards.includes(card.id) ? (
-                  <div
-                    className="card-front"
-                    style={{ backgroundColor: card.color }}
-                  >
-                    {card.type === 'achievement' ? (
-                      <>
-                        <div className="emoji">{card.emoji}</div>
-                        <div className="title">{card.title}</div>
-                      </>
-                    ) : (
-                      <div className="theme">{card.theme}</div>
-                    )}
-                  </div>
-                ) : (
-                  <div className="card-back">?</div>
-                )}
+                <div
+                  className="card-front"
+                  style={{ backgroundColor: card.color }}
+                >
+                  {card.type === 'achievement' ? (
+                    <>
+                      <div className="emoji">{card.emoji}</div>
+                      <div className="title">{card.title}</div>
+                    </>
+                  ) : (
+                    <div className="theme">{card.theme}</div>
+                  )}
+                </div>
+                <div className="card-back">?</div>
               </div>
             </div>
           ))}
