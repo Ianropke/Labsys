@@ -2,10 +2,11 @@
 import React, { useState, useEffect } from 'react';
 import Confetti from 'react-confetti';
 import PropTypes from 'prop-types';
-import './App.css'; // Ensure the import path matches the file location
+import './App.css'; // Ensure the path matches your project structure
 
+// Utility function to shuffle an array
 const shuffleArray = (array) => {
-  let shuffled = array.slice(); // Create a copy
+  let shuffled = array.slice(); // Create a copy of the array
   for (let i = shuffled.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
@@ -13,7 +14,7 @@ const shuffleArray = (array) => {
   return shuffled;
 };
 
-// Updated Card component
+// Card component
 const Card = ({ card, index, isFlipped, isMatched, handleClick }) => {
   const { title, emoji, theme, color, type } = card;
 
@@ -32,14 +33,10 @@ const Card = ({ card, index, isFlipped, isMatched, handleClick }) => {
         <div
           className="card-face card-back"
           style={{
-            backgroundColor: color || '#4a90e2', // Set background color directly
+            backgroundColor: color || '#4a90e2', // Set background color based on card data
             display: 'flex',
             flexDirection: 'column',
             padding: '10px',
-            color: 'white',
-            transform: 'rotateY(180deg)',
-            borderRadius: '12px',
-            backfaceVisibility: 'hidden',
           }}
         >
           {type === 'achievement' ? (
@@ -75,7 +72,7 @@ Card.propTypes = {
   handleClick: PropTypes.func.isRequired,
 };
 
-// ProgressBar component remains the same
+// ProgressBar component
 const ProgressBar = ({ matchedCount, totalCards, hintUsed, showHint, score }) => {
   const progressPercentage = (matchedCount / totalCards) * 100;
   return (
@@ -111,7 +108,7 @@ ProgressBar.propTypes = {
   score: PropTypes.number.isRequired,
 };
 
-// Modal component remains the same
+// Modal component
 const Modal = ({ matchDetails, closeDetails }) => {
   return (
     <div className="modal">
@@ -136,14 +133,77 @@ Modal.propTypes = {
 // Main App component
 const App = () => {
   const achievements = [
-    { id: 1, title: 'AI Roadmap', emoji: '🧠', details: 'I 2024 samarbejdede sektionen med DTU-studerende for at udarbejde en roadmap for AI.', theme: 'Innovation', color: '#ffcccb' },
-    { id: 2, title: 'Sektionsdag', emoji: '🌧️', details: 'Sektionen blev fanget i regn og hagl i GoBoats men stadig med (rimelig) højt humør.', theme: 'Team Spirit', color: '#add8e6' },
-    { id: 3, title: 'Kritiske systemer', emoji: '🛡️', details: 'Sektionen har sikret, at 6 af regionens kritiske systemer kører stabilt.', theme: 'Driftsstabilitet', color: '#90ee90' },
-    { id: 4, title: 'Udvikling af diagnostikken', emoji: '🏥', details: 'Forberedt digitalisering af patologi i Region Hovedstaden og fællesregionalt blodbanksystem.', theme: 'Digitalisering', color: '#f4a460' },
-    { id: 5, title: 'Opgraderinger', emoji: '⚡', details: '21 succesfulde opgraderinger af systemer gennemført.', theme: 'Drift', color: '#9370db' },
-    { id: 6, title: 'Nye kollegaer', emoji: '👥', details: '4 nye medarbejdere er blevet en vigtig del af sektionen.', theme: 'Vækst', color: '#ff69b4' },
-    { id: 7, title: 'IT-systemer', emoji: '📈', details: 'Optimering af alle IT-systemer og lukning af forældede systemer.', theme: 'Optimering', color: '#4682b4' },
-    { id: 8, title: 'Kurser', emoji: '📚', details: '16 kurser gennemført i emner fra ITIL til cybersikkerhed.', theme: 'Læring', color: '#00ced1' },
+    {
+      id: 1,
+      title: 'AI Roadmap',
+      emoji: '🧠',
+      details:
+        'I 2024 samarbejdede sektionen med DTU-studerende for at udarbejde en roadmap for AI.',
+      theme: 'Innovation',
+      color: '#ffcccb',
+    },
+    {
+      id: 2,
+      title: 'Sektionsdag',
+      emoji: '🌧️',
+      details:
+        'Sektionen blev fanget i regn og hagl i GoBoats men stadig med (rimelig) højt humør.',
+      theme: 'Team Spirit',
+      color: '#add8e6',
+    },
+    {
+      id: 3,
+      title: 'Kritiske systemer',
+      emoji: '🛡️',
+      details:
+        'Sektionen har sikret, at 6 af regionens kritiske systemer kører stabilt.',
+      theme: 'Driftsstabilitet',
+      color: '#90ee90',
+    },
+    {
+      id: 4,
+      title: 'Udvikling af diagnostikken',
+      emoji: '🏥',
+      details:
+        'Forberedt digitalisering af patologi i Region Hovedstaden og fællesregionalt blodbanksystem.',
+      theme: 'Digitalisering',
+      color: '#f4a460',
+    },
+    {
+      id: 5,
+      title: 'Opgraderinger',
+      emoji: '⚡',
+      details: '21 succesfulde opgraderinger af systemer gennemført.',
+      theme: 'Drift',
+      color: '#9370db',
+    },
+    {
+      id: 6,
+      title: 'Nye kollegaer',
+      emoji: '👥',
+      details:
+        '4 nye medarbejdere er blevet en vigtig del af sektionen.',
+      theme: 'Vækst',
+      color: '#ff69b4',
+    },
+    {
+      id: 7,
+      title: 'IT-systemer',
+      emoji: '📈',
+      details:
+        'Optimering af alle IT-systemer og lukning af forældede systemer.',
+      theme: 'Optimering',
+      color: '#4682b4',
+    },
+    {
+      id: 8,
+      title: 'Kurser',
+      emoji: '📚',
+      details:
+        '16 kurser gennemført i emner fra ITIL til cybersikkerhed.',
+      theme: 'Læring',
+      color: '#00ced1',
+    },
   ];
 
   const [cards, setCards] = useState([]);
@@ -165,7 +225,7 @@ const App = () => {
       ...achievements.map((a) => ({ ...a, type: 'theme' })),
     ]);
     setCards(gameCards);
-    console.log('Cards array:', gameCards); // Add this line to verify cards are populated
+    console.log('Cards array:', gameCards); // This line logs the cards array to the console
   }, []);
 
   // Handle window resize for Confetti
@@ -189,7 +249,8 @@ const App = () => {
   }, [matched, cards.length]);
 
   const handleClick = (index) => {
-    if (flipped.length === 2 || matched.has(index) || flipped.includes(index)) return;
+    if (flipped.length === 2 || matched.has(index) || flipped.includes(index))
+      return;
 
     const newFlipped = [...flipped, index];
     setFlipped(newFlipped);
@@ -197,7 +258,10 @@ const App = () => {
     if (newFlipped.length === 2) {
       const [first, second] = newFlipped;
 
-      if (cards[first].id === cards[second].id && cards[first].type !== cards[second].type) {
+      if (
+        cards[first].id === cards[second].id &&
+        cards[first].type !== cards[second].type
+      ) {
         setTimeout(() => {
           setMatched((prevMatched) => new Set([...prevMatched, first, second]));
           setScore((prevScore) => prevScore + 100);
@@ -248,7 +312,9 @@ const App = () => {
 
   return (
     <div className="app-container">
-      {showConfetti && <Confetti width={windowSize.width} height={windowSize.height} />}
+      {showConfetti && (
+        <Confetti width={windowSize.width} height={windowSize.height} />
+      )}
 
       <h1 className="app-title">🧪 Laboratoriesystemer 2024 🧪</h1>
 
@@ -258,6 +324,34 @@ const App = () => {
         hintUsed={hintUsed}
         showHint={showHint}
         score={score}
+      />
+
+      <div className="cards-grid">
+        {cards.map((card, index) => {
+          const isFlipped = flipped.includes(index);
+          const isMatched = matched.has(index);
+          return (
+            <Card
+              key={index}
+              card={card}
+              index={index}
+              isFlipped={isFlipped || isMatched}
+              isMatched={isMatched}
+              handleClick={handleClick}
+            />
+          );
+        })}
+      </div>
+
+      {matchDetails && (
+        <Modal matchDetails={matchDetails} closeDetails={closeDetails} />
+      )}
+    </div>
+  );
+};
+
+export default App;
+
       />
 
       <div className="cards-grid">
