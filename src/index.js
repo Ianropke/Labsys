@@ -160,7 +160,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Memory Matching Game</h1>
+      <h1>Året der gik i Laboratoriesystemer 2024</h1>
       <button onClick={initializeGame}>Restart Game</button>
       <div className="card-grid">
         {cards.map((card) => (
