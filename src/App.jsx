@@ -24,7 +24,7 @@ const Card = ({ card, index, isFlipped, isMatched, handleClick }) => {
     position: 'relative',
     transformStyle: 'preserve-3d',
     transition: 'transform 0.6s',
-    transform: isFlipped || isMatched ? 'rotateY(0deg)' : 'rotateY(180deg)',
+    transform: isFlipped || isMatched ? 'rotateY(180deg)' : 'rotateY(0deg)', // Corrected the rotation
     cursor: isMatched ? 'default' : 'pointer',
   };
 
@@ -41,18 +41,18 @@ const Card = ({ card, index, isFlipped, isMatched, handleClick }) => {
 
   const frontStyles = {
     ...cardFaceStyles,
-    backgroundColor: color || '#4a90e2',
-    color: 'white',
+    backgroundColor: '#e0e0e0',
+    color: 'black',
     transform: 'rotateY(0deg)',
-    flexDirection: 'column',
-    padding: '10px',
   };
 
   const backStyles = {
     ...cardFaceStyles,
-    backgroundColor: '#e0e0e0',
-    color: 'black',
+    backgroundColor: color || '#4a90e2',
+    color: 'white',
     transform: 'rotateY(180deg)',
+    flexDirection: 'column',
+    padding: '10px',
   };
 
   return (
@@ -65,7 +65,8 @@ const Card = ({ card, index, isFlipped, isMatched, handleClick }) => {
         onKeyPress={(e) => e.key === 'Enter' && handleClick(index)}
         style={cardStyles}
       >
-        <div style={frontStyles}>
+        <div style={frontStyles}>✨</div>
+        <div style={backStyles}>
           {type === 'achievement' ? (
             <>
               <div style={{ fontSize: '30px', fontWeight: 'bold' }}>{emoji}</div>
@@ -75,7 +76,6 @@ const Card = ({ card, index, isFlipped, isMatched, handleClick }) => {
             <div style={{ fontSize: '18px', fontWeight: 'bold' }}>{theme}</div>
           )}
         </div>
-        <div style={backStyles}>✨</div>
       </div>
     </div>
   );
@@ -309,9 +309,7 @@ const App = () => {
     }, {});
 
     const pair = Object.values(cardGroups).find(
-      (group) =>
-        group.length === 2 &&
-        group[0].type !== group[1].type
+      (group) => group.length === 2 && group[0].type !== group[1].type
     );
 
     if (!pair) {
@@ -388,3 +386,4 @@ const App = () => {
 };
 
 export default App;
+
