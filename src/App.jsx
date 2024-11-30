@@ -1,7 +1,10 @@
+// app.jsx
 import React, { useState, useEffect } from 'react';
 import Confetti from 'react-confetti';
 import PropTypes from 'prop-types';
+import './app.css'; // Import the CSS file
 
+// Shuffle function
 const shuffleArray = (array) => {
   let shuffled = array.slice(); // Create a copy
   for (let i = shuffled.length - 1; i > 0; i--) {
@@ -11,62 +14,26 @@ const shuffleArray = (array) => {
   return shuffled;
 };
 
+// Card component
 const Card = ({ card, index, isFlipped, isMatched, handleClick }) => {
   const { title, emoji, theme, color, type } = card;
 
-  const cardContainerStyles = {
-    perspective: '1000px',
-  };
-
-  const cardStyles = {
-    width: '100%',
-    height: '120px',
-    position: 'relative',
-    transformStyle: 'preserve-3d',
-    transition: 'transform 0.6s',
-    transform: isFlipped || isMatched ? 'rotateY(180deg)' : 'rotateY(0deg)', // Corrected the rotation
-    cursor: isMatched ? 'default' : 'pointer',
-  };
-
-  const cardFaceStyles = {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    backfaceVisibility: 'hidden',
-    borderRadius: '12px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  };
-
-  const frontStyles = {
-    ...cardFaceStyles,
-    backgroundColor: '#e0e0e0',
-    color: 'black',
-    transform: 'rotateY(0deg)',
-  };
-
-  const backStyles = {
-    ...cardFaceStyles,
-    backgroundColor: color || '#4a90e2',
-    color: 'white',
-    transform: 'rotateY(180deg)',
-    flexDirection: 'column',
-    padding: '10px',
-  };
-
   return (
-    <div style={cardContainerStyles}>
+    <div className="card-container">
       <div
+        className={`card ${isFlipped || isMatched ? 'flipped' : ''}`}
+        onClick={() => handleClick(index)}
+        onKeyPress={(e) => e.key === 'Enter' && handleClick(index)}
         role="button"
         tabIndex="0"
         aria-label={`Card ${index}`}
-        onClick={() => handleClick(index)}
-        onKeyPress={(e) => e.key === 'Enter' && handleClick(index)}
-        style={cardStyles}
+        style={{ cursor: isMatched ? 'default' : 'pointer' }}
       >
-        <div style={frontStyles}>✨</div>
-        <div style={backStyles}>
+        <div className="card-face card-front">✨</div>
+        <div
+          className="card-face card-back"
+          style={{ '--card-color': color || '#4a90e2' }}
+        >
           {type === 'achievement' ? (
             <>
               <div style={{ fontSize: '30px', fontWeight: 'bold' }}>{emoji}</div>
@@ -89,55 +56,18 @@ Card.propTypes = {
   handleClick: PropTypes.func.isRequired,
 };
 
+// ProgressBar component
 const ProgressBar = ({ matchedCount, totalCards, hintUsed, showHint, score }) => {
   const progressPercentage = (matchedCount / totalCards) * 100;
   return (
-    <div
-      style={{
-        marginBottom: '30px',
-        padding: '20px',
-        backgroundColor: '#ffffff',
-        borderRadius: '12px',
-        boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
-        display: 'inline-block',
-        textAlign: 'center',
-        width: 'fit-content',
-      }}
-    >
-      <h2 style={{ margin: '0 0 15px', fontSize: '18px', fontWeight: 'bold' }}>Progress</h2>
-      <div
-        style={{
-          background: '#e0e0e0',
-          borderRadius: '10px',
-          overflow: 'hidden',
-          width: '300px',
-          height: '24px',
-          position: 'relative',
-          margin: '0 auto 15px',
-        }}
-      >
+    <div className="progress-bar-container">
+      <h2 className="progress-title">Progress</h2>
+      <div className="progress-bar">
         <div
-          style={{
-            background: 'linear-gradient(90deg, #4a90e2, #00ced1)',
-            width: `${progressPercentage}%`,
-            height: '100%',
-            transition: 'width 0.5s ease',
-          }}
+          className="progress-bar-fill"
+          style={{ width: `${progressPercentage}%` }}
         ></div>
-        <p
-          style={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            fontSize: '14px',
-            fontWeight: 'bold',
-            color: 'black',
-            margin: 0,
-          }}
-        >
-          {Math.round(progressPercentage)}%
-        </p>
+        <p className="progress-bar-text">{Math.round(progressPercentage)}%</p>
       </div>
       <div style={{ marginTop: '10px' }}>
         <h2>Score: {score}</h2>
@@ -145,15 +75,7 @@ const ProgressBar = ({ matchedCount, totalCards, hintUsed, showHint, score }) =>
       <button
         onClick={showHint}
         disabled={hintUsed}
-        style={{
-          backgroundColor: hintUsed ? '#ccc' : '#4a90e2',
-          color: 'white',
-          padding: '10px 20px',
-          border: 'none',
-          borderRadius: '4px',
-          cursor: hintUsed ? 'not-allowed' : 'pointer',
-          marginTop: '10px',
-        }}
+        className="hint-button"
         aria-label={hintUsed ? 'Hint already used' : 'Show hint'}
       >
         {hintUsed ? 'Hint Used' : 'Show Hint'}
@@ -170,37 +92,15 @@ ProgressBar.propTypes = {
   score: PropTypes.number.isRequired,
 };
 
+// Modal component
 const Modal = ({ matchDetails, closeDetails }) => {
   return (
-    <div
-      style={{
-        position: 'fixed',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        backgroundColor: 'white',
-        padding: '20px',
-        borderRadius: '8px',
-        boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-        textAlign: 'center',
-        maxWidth: '80%',
-        maxHeight: '80%',
-        overflowY: 'auto',
-      }}
-    >
+    <div className="modal">
       <h2>Matched! 🎉</h2>
       <p>{matchDetails}</p>
       <button
         onClick={closeDetails}
-        style={{
-          backgroundColor: '#4a90e2',
-          color: 'white',
-          padding: '10px 20px',
-          border: 'none',
-          borderRadius: '4px',
-          marginTop: '10px',
-          cursor: 'pointer',
-        }}
+        className="close-button"
         aria-label="Close details"
       >
         Close
@@ -214,6 +114,7 @@ Modal.propTypes = {
   closeDetails: PropTypes.func.isRequired,
 };
 
+// Main App component
 const App = () => {
   const achievements = [
     { id: 1, title: 'AI Roadmap', emoji: '🧠', details: 'I 2024 samarbejdede sektionen med DTU-studerende for at udarbejde en roadmap for AI.', theme: 'Innovation', color: '#ffcccb' },
@@ -238,6 +139,7 @@ const App = () => {
     height: window.innerHeight,
   });
 
+  // Initialize the cards
   useEffect(() => {
     const gameCards = shuffleArray([
       ...achievements.map((a) => ({ ...a, type: 'achievement' })),
@@ -246,6 +148,7 @@ const App = () => {
     setCards(gameCards);
   }, []);
 
+  // Handle window resize for Confetti
   useEffect(() => {
     const handleResize = () => {
       setWindowSize({
@@ -257,6 +160,7 @@ const App = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Show Confetti when all matches are found
   useEffect(() => {
     if (matched.size === cards.length && cards.length > 0) {
       setShowConfetti(true);
@@ -323,30 +227,10 @@ const App = () => {
   };
 
   return (
-    <div
-      style={{
-        background: 'linear-gradient(135deg, #f5f7fa, #c3cfe2)',
-        minHeight: '100vh',
-        padding: '20px',
-        textAlign: 'center',
-      }}
-    >
+    <div className="app-container">
       {showConfetti && <Confetti width={windowSize.width} height={windowSize.height} />}
 
-      <h1
-        style={{
-          marginBottom: '20px',
-          background: 'linear-gradient(90deg, #4a90e2, #f9a602)',
-          WebkitBackgroundClip: 'text',
-          color: 'transparent',
-          fontWeight: 'bold',
-          fontSize: 'calc(2.5rem + 1vw)',
-          lineHeight: '1.2',
-          wordBreak: 'break-word',
-        }}
-      >
-        🧪 Laboratoriesystemer 2024 🧪
-      </h1>
+      <h1 className="app-title">🧪 Laboratoriesystemer 2024 🧪</h1>
 
       <ProgressBar
         matchedCount={matched.size}
@@ -356,14 +240,7 @@ const App = () => {
         score={score}
       />
 
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(4, 1fr)', // Fixed 4 columns for symmetry
-          gap: '10px',
-          justifyItems: 'center',
-        }}
-      >
+      <div className="cards-grid">
         {cards.map((card, index) => {
           const isFlipped = flipped.includes(index);
           const isMatched = matched.has(index);
