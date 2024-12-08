@@ -1,4 +1,4 @@
-// src/index.js
+// index.js
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import './App.css'; // Ensure this import is correct
@@ -78,19 +78,17 @@ function App() {
     },
   ];
 
-  // State variables
   const [cards, setCards] = useState([]);
   const [firstCard, setFirstCard] = useState(null);
   const [secondCard, setSecondCard] = useState(null);
   const [disabled, setDisabled] = useState(false);
   const [matchedCards, setMatchedCards] = useState([]);
-  const [showDetails, setShowDetails] = useState(null); // For displaying match details
+  const [showDetails, setShowDetails] = useState(null);
 
-  const [moves, setMoves] = useState(0); // For counting moves
-  const [time, setTime] = useState(0); // For tracking time in seconds
-  const [gameActive, setGameActive] = useState(true); // To control the timer
+  const [moves, setMoves] = useState(0); 
+  const [time, setTime] = useState(0); 
+  const [gameActive, setGameActive] = useState(true); 
 
-  // Function to shuffle and prepare the cards
   const initializeGame = () => {
     const cardsArray = cardData.flatMap((card) => [
       { ...card, type: 'achievement', uniqueId: Math.random(), flipped: false },
@@ -105,9 +103,9 @@ function App() {
     setDisabled(false);
     setMatchedCards([]);
     setShowDetails(null);
-    setMoves(0); // Reset moves
-    setTime(0); // Reset timer
-    setGameActive(true); // Start the timer
+    setMoves(0);
+    setTime(0);
+    setGameActive(true);
   };
 
   useEffect(() => {
@@ -122,16 +120,13 @@ function App() {
         setTime((prevTime) => prevTime + 1);
       }, 1000);
     }
-
     return () => clearInterval(timer);
   }, [gameActive]);
 
-  // Handle card click
   const handleCardClick = (clickedCard) => {
     if (disabled) return;
     if (clickedCard.flipped) return;
 
-    // Flip the clicked card
     const updatedCards = cards.map((card) =>
       card.uniqueId === clickedCard.uniqueId ? { ...card, flipped: true } : card
     );
@@ -142,24 +137,26 @@ function App() {
     } else {
       setSecondCard(clickedCard);
       setDisabled(true);
-      setMoves((prevMoves) => prevMoves + 1); // Increment moves
+      setMoves((prevMoves) => prevMoves + 1);
     }
   };
 
   useEffect(() => {
     if (firstCard && secondCard) {
-      if (
-        firstCard.id === secondCard.id &&
-        firstCard.type !== secondCard.type
-      ) {
+      if (firstCard.id === secondCard.id && firstCard.type !== secondCard.type) {
         // It's a match!
-        setMatchedCards((prev) => [...prev, firstCard.id]);
-        setShowDetails(firstCard.details); // Show details of the matched achievement
-        resetTurn();
+        const newMatchedCards = [...matchedCards, firstCard.id];
+        setMatchedCards(newMatchedCards);
+
+        const isLastMatch = newMatchedCards.length === cardData.length;
+        if (!isLastMatch) {
+          setShowDetails(firstCard.details);
+        }
+
+        resetTurn(isLastMatch);
       } else {
         // Not a match
         setTimeout(() => {
-          // Flip back the cards
           const updatedCards = cards.map((card) =>
             card.uniqueId === firstCard.uniqueId ||
             card.uniqueId === secondCard.uniqueId
@@ -167,20 +164,18 @@ function App() {
               : card
           );
           setCards(updatedCards);
-          resetTurn();
+          resetTurn(false);
         }, 1000);
       }
     }
   }, [firstCard, secondCard]);
 
-  const resetTurn = () => {
+  const resetTurn = (isLastMatch) => {
     setFirstCard(null);
     setSecondCard(null);
     setDisabled(false);
-
-    // Check if the game is over
-    if (matchedCards.length + 1 === cardData.length) {
-      setGameActive(false); // Stop the timer
+    if (isLastMatch) {
+      setGameActive(false);
     }
   };
 
@@ -188,6 +183,10 @@ function App() {
     <div className="App">
       <div className="header">
         <h1>Året der gik i Laboratoriesystemer 2024</h1>
+        {/* Instruction Text (A9) */}
+        <p style={{ color: '#333', marginBottom: '20px' }}>
+          Klik på to kort for at afsløre dem. Match opnåelser med deres temaer.
+        </p>
         <div className="stats">
           <p>⏱️ Tid: {time} sekunder</p>
           <p>🔄 Træk: {moves}</p>
@@ -195,33 +194,37 @@ function App() {
         <button onClick={initializeGame}>Prøv igen</button>
       </div>
 
-      {/* Wrap the game area in a container */}
       <div className="game-container">
         <div className="card-grid">
-          {cards.map((card) => (
-            <div
-              key={card.uniqueId}
-              className={`card ${card.flipped ? 'flipped' : ''}`}
-              onClick={() => handleCardClick(card)}
-            >
-              <div className="card-inner">
-                <div
-                  className="card-front"
-                  style={{ backgroundColor: card.color }}
-                >
-                  {card.type === 'achievement' ? (
-                    <>
-                      <div className="emoji">{card.emoji}</div>
-                      <div className="title">{card.title}</div>
-                    </>
-                  ) : (
-                    <div className="theme">{card.theme}</div>
-                  )}
+          {cards.map((card) => {
+            const isMatched = matchedCards.includes(card.id);
+            return (
+              <div
+                key={card.uniqueId}
+                className={`card ${card.flipped ? 'flipped' : ''} ${
+                  isMatched ? 'matched' : ''
+                }`}
+                onClick={() => handleCardClick(card)}
+              >
+                <div className="card-inner">
+                  <div
+                    className="card-front"
+                    style={{ backgroundColor: card.color }}
+                  >
+                    {card.type === 'achievement' ? (
+                      <>
+                        <div className="emoji">{card.emoji}</div>
+                        <div className="title">{card.title}</div>
+                      </>
+                    ) : (
+                      <div className="theme">{card.theme}</div>
+                    )}
+                  </div>
+                  <div className="card-back">?</div>
                 </div>
-                <div className="card-back">?</div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 
@@ -241,9 +244,7 @@ function App() {
         <div className="modal">
           <div className="modal-content">
             <h2>🎉 Tillykke!</h2>
-            <p>
-              Du fandt alle parrene på {time} sekunder med {moves} træk.
-            </p>
+            <p>Du fandt alle parrene på {time} sekunder med {moves} træk.</p>
             <button onClick={() => initializeGame()}>Spil igen</button>
           </div>
         </div>
